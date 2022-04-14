@@ -1,0 +1,18 @@
+[
+    "dbaeumer.vscode-eslint",
+    "formulahendry.terminal",
+    "AquaSecurityOfficial.trivy-vulnerability-scanner",
+    "alefragnani.project-manager",
+    "mhutchie.git-graph",
+    "Cardinal90.multi-cursor-case-preserve",
+    "albert.TabOut",
+    "ms-vsliveshare.vsliveshare-pack",
+    "ms-vsliveshare.vsliveshare-audio",
+    "ms-vsliveshare.vsliveshare-pack",
+    "ms-azuretools.vscode-docker",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-portuguese",
+    "ryu1kn.text-marker",
+    "ryu1kn.partial-diff",
+    "daylerees.rainglow"
+]
