@@ -22,6 +22,8 @@ then
   exit;
 fi
 
+CONFIGS=()
+
 # Get the options
 while getopts ":hs:w:PNV" option; do
    case $option in
@@ -34,9 +36,11 @@ while getopts ":hs:w:PNV" option; do
          WORKSPACE_FOLDER=`echo $OPTARG | sed 's/ *$//g'`;;
       P)
          CONFIG_FOLDER="python"
+         CONFIGS+=("\"remoteUser\": \"vscode\",")
          INITIALIZE_COMMAND_OPTIONS="-P -v <Python Version: 3.6,3.7,3.8,3.9,3.10>";;
       N)
          CONFIG_FOLDER="node"
+         CONFIGS+=("\"remoteUser\": \"node\",")
          INITIALIZE_COMMAND_OPTIONS="-N -v <Node Version: 12,14,16>";;
       V) # Script Version
          echo "0.1.0"
@@ -60,16 +64,17 @@ FEATURES=`cat $BASEDIR/$CONFIG_FOLDER/features.json`
 
 file="
 {
-  \"name\": \"$SERVICE_NAME\",
-  \"dockerComposeFile\": [
-    \"$BASEDIR/docker-compose.yml\",
-  ],
-  \"settings\": $SETTINGS,
-  \"service\": \"$SERVICE_NAME\",
-  \"extensions\": $EXTENSIONS,
-  \"features\": $FEATURES,
-  \"workspaceFolder\": \"/workspace/$SERVICE_NAME\",
-  \"initializeCommand\": \"$BASEDIR/docker-compose.sh $INITIALIZE_COMMAND_OPTIONS -s $SERVICE_NAME -w $WORKSPACE_FOLDER\"
+   \"name\": \"$SERVICE_NAME\",
+   \"dockerComposeFile\": [
+      \"/tmp/docker-compose-$SERVICE_NAME.yml\",
+   ],
+   \"settings\": $SETTINGS,
+   \"service\": \"$SERVICE_NAME\",
+   \"extensions\": $EXTENSIONS,
+   \"features\": $FEATURES,
+   \"workspaceFolder\": \"/workspace/$SERVICE_NAME\",
+   ${CONFIGS[@]}
+   \"initializeCommand\": \"$BASEDIR/docker-compose.sh $INITIALIZE_COMMAND_OPTIONS -s $SERVICE_NAME -w $WORKSPACE_FOLDER\"
 }
 "
 

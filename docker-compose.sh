@@ -24,9 +24,9 @@ service="
   $SERVICE:
     build:
       context: .
-      dockerfile: python/Dockerfile-devcontainers-python
+      dockerfile: $BASEDIR/python/Dockerfile-devcontainers-python
       args:
-        VARIANT: '$1'
+        VARIANT: '$VARIANT'
         NODE_VERSION: 'lts/*'
     <<: *shared-variables
 "
@@ -38,9 +38,9 @@ service="
   $SERVICE:
     build:
       context: .
-      dockerfile: node/Dockerfile-devcontainers-node
+      dockerfile: $BASEDIR/node/Dockerfile-devcontainers-node
       args:
-        VARIANT: '$1'
+        VARIANT: '$VARIANT'
     <<: *shared-variables
 "
 }
@@ -87,9 +87,9 @@ fi
 
 case $IMAGE in
   Python)
-    Python $VARIANT $SERVICE;;
+    Python $VARIANT $SERVICE $BASEDIR;;
   Node)
-    Node $VARIANT $SERVICE;;
+    Node $VARIANT $SERVICE $BASEDIR;;
 esac
 
 file="
@@ -112,4 +112,4 @@ services:
   $service
 "
 
-echo "$file" > $BASEDIR/docker-compose.yml
+echo "$file" > /tmp/docker-compose-$SERVICE.yml
