@@ -37,30 +37,45 @@ joinByChar() {
 
 Tasks()
 {
-tasks_arr=()
-for ARGUMENT in "$@"
-do
-key=$(echo $ARGUMENT | cut -f1 -d=)
-key_length=${#key}
-value="${ARGUMENT:$key_length+1}"
-tasks_arr+=("
-        {
-            \"label\": \"Create devcontainer $value\",
-            \"type\": \"shell\",
-            \"command\": \"$absolute_path/devcontainer-config-generator.sh\",
-            \"args\": [
-                \"-$key\",
-                \"-s \${workspaceFolderBasename}\",
-                \"-w \${workspaceFolder}\"
-            ],
-            \"problemMatcher\": [],
-            \"group\": {
-                \"kind\": \"build\"
-            }
-        }
-")
-done
-joinByChar , "${tasks_arr[@]}"
+    tasks_arr=()
+    for ARGUMENT in "$@"
+    do
+        key=$(echo $ARGUMENT | cut -f1 -d=)
+        key_length=${#key}
+        value="${ARGUMENT:$key_length+1}"
+
+        if [[ $key == "P" ]]
+        then
+            VERSIONS=(3.6 3.7 3.8 3.9 3.10)
+        fi
+
+        if [[ $key == "N" ]]
+        then
+            VERSIONS=(12 14 16)
+        fi
+
+        for VERSION in "${VERSIONS[@]}"
+        do
+            tasks_arr+=("
+                    {
+                        \"label\": \"CREATE devcontainer $value $VERSION\",
+                        \"type\": \"shell\",
+                        \"command\": \"$absolute_path/devcontainer-config-generator.sh\",
+                        \"args\": [
+                            \"-$key\",
+                            \"-v $VERSION\",
+                            \"-s \${workspaceFolderBasename}\",
+                            \"-w \${workspaceFolder}\"
+                        ],
+                        \"problemMatcher\": [],
+                        \"group\": {
+                            \"kind\": \"build\"
+                        }
+                    }
+            ")
+        done
+    done
+    joinByChar , "${tasks_arr[@]}"
 }
 
 file="{

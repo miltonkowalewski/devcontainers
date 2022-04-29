@@ -1,0 +1,5 @@
+{
+    "python.venvPath": ".venv/bin/active",
+    "python.envFile": "${workspaceFolder}/.venv",
+    "workbench.colorTheme": "Monokai Plus - Slate"
+}

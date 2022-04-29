@@ -18,13 +18,15 @@ Help()
    echo
 }
 
+BASEDIR=$(dirname "$0")
+
 Python() 
 {
+cp $BASEDIR/python/Dockerfile $WORKSPACE_FOLDER/.devcontainer
 service="
   $SERVICE:
     build:
       context: .
-      dockerfile: $BASEDIR/python/Dockerfile-devcontainers-python
       args:
         VARIANT: '$VARIANT'
         NODE_VERSION: 'lts/*'
@@ -34,11 +36,11 @@ service="
 
 Node() 
 {
+cp $BASEDIR/node/Dockerfile $WORKSPACE_FOLDER/.devcontainer
 service="
   $SERVICE:
     build:
       context: .
-      dockerfile: $BASEDIR/node/Dockerfile-devcontainers-node
       args:
         VARIANT: '$VARIANT'
     <<: *shared-variables
@@ -51,8 +53,6 @@ then
   Help
   exit;
 fi
-
-BASEDIR=$(dirname "$0")
 
 # Get the options
 while getopts "hv:PNs:w:V" option; do
@@ -87,9 +87,9 @@ fi
 
 case $IMAGE in
   Python)
-    Python $VARIANT $SERVICE $BASEDIR;;
+    Python $VARIANT $SERVICE $BASEDIR $WORKSPACE_FOLDER;;
   Node)
-    Node $VARIANT $SERVICE $BASEDIR;;
+    Node $VARIANT $SERVICE $BASEDIR $WORKSPACE_FOLDER;;
 esac
 
 file="
@@ -112,4 +112,9 @@ services:
   $service
 "
 
-echo "$file" > /tmp/docker-compose-$SERVICE.yml
+if [ ! -d $WORKSPACE_FOLDER/.devcontainer ]; 
+then
+  mkdir $WORKSPACE_FOLDER/.devcontainer;
+fi
+
+echo "$file" > $WORKSPACE_FOLDER/.devcontainer/docker-compose.yml

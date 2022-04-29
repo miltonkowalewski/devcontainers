@@ -25,7 +25,7 @@ fi
 CONFIGS=()
 
 # Get the options
-while getopts ":hs:w:PNV" option; do
+while getopts ":hs:w:v:PNV" option; do
    case $option in
       h) # display Help
          Help
@@ -34,14 +34,18 @@ while getopts ":hs:w:PNV" option; do
          SERVICE_NAME=`echo $OPTARG | tr '[:upper:]' '[:lower:]' | sed 's/ *$//g'`;;
       w)
          WORKSPACE_FOLDER=`echo $OPTARG | sed 's/ *$//g'`;;
+      v)
+         VERSION=`echo -v $OPTARG`;;
       P)
          CONFIG_FOLDER="python"
          CONFIGS+=("\"remoteUser\": \"vscode\",")
-         INITIALIZE_COMMAND_OPTIONS="-P -v <Python Version: 3.6,3.7,3.8,3.9,3.10>";;
+         DEFAULT_VERSIONS="-v <Python Version: 3.6,3.7,3.8,3.9,3.10>"
+         INITIALIZE_COMMAND_OPTIONS="-P";;
       N)
          CONFIG_FOLDER="node"
          CONFIGS+=("\"remoteUser\": \"node\",")
-         INITIALIZE_COMMAND_OPTIONS="-N -v <Node Version: 12,14,16>";;
+         DEFAULT_VERSIONS="-v <Node Version: 12,14,16>"
+         INITIALIZE_COMMAND_OPTIONS="-N";;
       V) # Script Version
          echo "0.1.0"
          exit;;
@@ -52,9 +56,16 @@ while getopts ":hs:w:PNV" option; do
 done
 
 if [[ -z $SERVICE_NAME || -z $WORKSPACE_FOLDER ]]; 
-  then 
-    echo "Missing options"
-    exit;
+then 
+   echo "Missing options"
+   exit;
+fi
+
+if [[ -z $VERSION ]];
+then
+   INITIALIZE_COMMAND_OPTIONS+=" $DEFAULT_VERSIONS"
+else
+   INITIALIZE_COMMAND_OPTIONS+=" $VERSION"
 fi
 
 BASEDIR=$(dirname "$0")
@@ -66,7 +77,7 @@ file="
 {
    \"name\": \"$SERVICE_NAME\",
    \"dockerComposeFile\": [
-      \"/tmp/docker-compose-$SERVICE_NAME.yml\",
+      \"$WORKSPACE_FOLDER/.devcontainer/docker-compose.yml\",
    ],
    \"settings\": $SETTINGS,
    \"service\": \"$SERVICE_NAME\",
@@ -74,10 +85,16 @@ file="
    \"features\": $FEATURES,
    \"workspaceFolder\": \"/workspace/$SERVICE_NAME\",
    ${CONFIGS[@]}
-   \"initializeCommand\": \"$BASEDIR/docker-compose.sh $INITIALIZE_COMMAND_OPTIONS -s $SERVICE_NAME -w $WORKSPACE_FOLDER\"
 }
 "
 
 echo $file
 
-echo "$file" > $WORKSPACE_FOLDER/.devcontainer.json
+if [ ! -d $WORKSPACE_FOLDER/.devcontainer ]; 
+then
+   echo "Create folder"
+   mkdir $WORKSPACE_FOLDER/.devcontainer;
+fi
+
+bash $BASEDIR/docker-compose.sh $INITIALIZE_COMMAND_OPTIONS -s $SERVICE_NAME -w $WORKSPACE_FOLDER
+echo "$file" > $WORKSPACE_FOLDER/.devcontainer/devcontainer.json
