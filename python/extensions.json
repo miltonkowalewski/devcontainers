@@ -2,6 +2,7 @@
     "ms-python.python",
     "ms-python.vscode-pylance",
     "algor.monokaiplus",
+    "daylerees.rainglow",
     "eamodio.gitlens",
     "KevinRose.vsc-python-indent",
     "njpwerner.autodocstring",
@@ -17,5 +18,8 @@
     "mhutchie.git-graph",
     "alefragnani.project-manager",
     "AquaSecurityOfficial.trivy-vulnerability-scanner",
-    "formulahendry.terminal"
+    "formulahendry.terminal",
+    "ms-vscode.makefile-tools",
+    "ms-python.black-formatter",
+    "ms-python.isort"
 ]

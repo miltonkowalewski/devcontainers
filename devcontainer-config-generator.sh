@@ -77,7 +77,7 @@ file="
 {
    \"name\": \"$SERVICE_NAME\",
    \"dockerComposeFile\": [
-      \"$WORKSPACE_FOLDER/.devcontainer/docker-compose.yml\",
+      \"docker-compose.yml\",
    ],
    \"settings\": $SETTINGS,
    \"service\": \"$SERVICE_NAME\",
