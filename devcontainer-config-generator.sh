@@ -94,6 +94,10 @@ if [ ! -d $WORKSPACE_FOLDER/.devcontainer ];
 then
    echo "Create folder"
    mkdir $WORKSPACE_FOLDER/.devcontainer;
+else
+   echo "Backup folder"
+   mv $WORKSPACE_FOLDER/.devcontainer $WORKSPACE_FOLDER/.devcontainer.`date +"%Y-%m-%d_%I:%M:%S"`.bkp;
+   mkdir $WORKSPACE_FOLDER/.devcontainer;
 fi
 
 bash $BASEDIR/docker-compose.sh $INITIALIZE_COMMAND_OPTIONS -s $SERVICE_NAME -w $WORKSPACE_FOLDER
