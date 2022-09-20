@@ -2,12 +2,50 @@
     "python.venvPath": ".venv/bin/active",
     "python.envFile": "${workspaceFolder}/.venv",
     "python.analysis.inlayHints.functionReturnTypes": true,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
     "python.analysis.inlayHints.variableTypes": true,
+    "explorer.autoReveal": false,
+    "editor.quickSuggestions": {
+        "other": "inline",
+        "comments": "off",
+        "strings": "inline"
+    },
+    "scm.diffDecorationsGutterPattern": {
+        "added": false,
+        "modified": true
+    },
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
-        },
+        }
     },
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": false,
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "workbench.editor.highlightModifiedTabs": true,
+    "zenMode.fullScreen": true,
+    "zenMode.hideActivityBar": true,
+    "zenMode.hideLineNumbers": true,
+    "zenMode.hideStatusBar": true,
+    "zenMode.hideTabs": true,
+    "editor.minimap.maxColumn": 120,
+    "workbench.colorCustomizations": {
+        "[Monokai]": {
+            "editor.background": "#181414",
+            "sideBar.background": "#181414",
+            "panel.background": "#181414"
+        }
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/__pycache__": true
+    },
+    "editor.stickyScroll.enabled": true
 }

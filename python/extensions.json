@@ -1,11 +1,9 @@
 [
     "albert.TabOut",
     "alefragnani.project-manager",
-    "algor.monokaiplus",
     "almenon.arepl",
     "AquaSecurityOfficial.trivy-vulnerability-scanner",
     "Cardinal90.multi-cursor-case-preserve",
-    "daylerees.rainglow",
     "eamodio.gitlens",
     "formulahendry.terminal",
     "GitLab.gitlab-workflow",
@@ -19,9 +17,11 @@
     "ms-toolsai.jupyter-renderers",
     "njpwerner.autodocstring",
     "njqdev.vscode-python-typehint",
-    "rangav.vscode-thunder-client",
     "ryu1kn.partial-diff",
     "ryu1kn.text-marker",
     "streetsidesoftware.code-spell-checker",
     "GitHub.remotehub",
+    "mechatroner.rainbow-csv",
+    "LouisWT.regexp-preview",
+    "pomdtr.excalidraw-editor"
 ]
